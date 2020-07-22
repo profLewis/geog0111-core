@@ -44,7 +44,6 @@ RUN curl -O https://raw.githubusercontent.com/jupyter/docker-stacks/master/base-
 
 RUN git clone https://github.com/profLewis/geog0111-core.git
 
-USER $NB_UID
 WORKDIR $HOME/geog0111-core/notebooks
 
 ARG PYTHON_VERSION=default
@@ -57,6 +56,8 @@ RUN conda update -n base conda --yes && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER 
 
+
+USER $NB_UID
 
 
 
