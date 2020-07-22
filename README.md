@@ -1,2 +1,4 @@
 # geog0111-core
- UCL Geograph Scientific Computing
+ UCL Geography Scientific Computing
+
+docker build . --file Dockerfile --tag  proflewis/geog0111
