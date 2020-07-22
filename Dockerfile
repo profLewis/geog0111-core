@@ -39,7 +39,7 @@ ENV PATH=$CONDA_DIR/bin:$PATH \
 
 RUN curl -O https://raw.githubusercontent.com/jupyter/docker-stacks/master/base-notebook/fix-permissions && \
     chmod a+rx fix-permissions && \
-    cp mv /usr/local/bin/fix-permissions
+    cp fix-permissions /usr/local/bin/fix-permissions
 
 
 RUN git clone https://github.com/profLewis/geog0111-core.git
