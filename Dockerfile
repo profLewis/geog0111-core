@@ -2,6 +2,11 @@ FROM jgomezdans/uclgeog
 
 LABEL maintainer="Philip Lewis <p.lewis@ucl.ac.uk>"
 
+USER root
+
+RUN apt-get install -yq --no-install-recommends \
+    git
+    
 USER $NB_USER
 
 RUN git clone https://github.com/profLewis/geog0111-core.git
