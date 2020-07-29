@@ -1,0 +1,30 @@
+sudo: required
+
+# the main processes are wrapped into two (sh) shells
+#
+# - conda_get.sh : pull miniconda and install
+# - conda_set.sh : install uclgeog environment
+#
+# On a locasl machine, you can run (source) these
+# shells directly to do a setup. 
+
+services:
+  - docker
+
+env: 
+  LANG:   "en_US.UTF-8"
+  LC_ALL: "en_US.UTF-8"
+     
+jobs:
+  include:
+    - name: "Python latest on Xenial Linux"
+      python: latest          # this works for Linux but is ignored on macOS or Windows
+      before_install:
+        - docker build --file Dockerfile --tag proflewis/geog0111:
+install:
+  - python uclgeog/batch.py
+  
+# command to run tests
+script:
+  # this is a quick test of a critical element
+  - python -c "import gdal" 
