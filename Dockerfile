@@ -1,4 +1,4 @@
-FROM jgomezdans/geog
+FROM jgomezdans/uclgeog
 
 LABEL maintainer="Philip Lewis <p.lewis@ucl.ac.uk>"
 USER root

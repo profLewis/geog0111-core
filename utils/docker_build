@@ -1,0 +1,7 @@
+#!/bin/bash
+
+docker login
+docker build . --file Dockerfile --tag proflewis/geog0111
+docker push proflewis/geog0111
+
+
