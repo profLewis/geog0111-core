@@ -67,7 +67,7 @@ if sysname == 'Darwin':
     sysname = 'MacOSX'
 
 
-l=[j for j in [i.split('#')[0].split() for i in open('Docker/Dockerfile','r').read().replace("/fix-permissions","/fix_permissions").replace("fix-permissions","chown -R ${USER} ").replace("/fix_permissions","/fix-permissions").replace('/opt/conda','$CONDA_DIR').replace('\\\\\n','').split('\n')] if len(j)];
+l=[j for j in [i.split('#')[0].split() for i in open('Docker/Dockerfile','r').read().replace("/fix-permissions","/fix_permissions").replace("fix-permissions","chown -R ${USER} ").replace("/fix_permissions","/fix-permissions").replace('/opt/conda',os.environ["CONDA_DIR"]).replace('\\\\\n','').split('\n')] if len(j)];
 
 WORKDIR = '.'
 sudo = ''
@@ -76,7 +76,7 @@ sudo = ''
 fix_env = f' UHOME={os.environ["HOME"]} HOME={os.environ["HOME"]} USER={os.environ["USER"]}'
 
 for i,m in enumerate(l):
-  m = ' '.join(m).replace('/home/$NB_USER','${HOME}').split(" ")
+  m = ' '.join(m).replace('/home/$NB_USER',os.environ["HOME"]).split(" ")
   if (m[0] == 'USER'):
     if m[1] == 'root':
         sudo = 'sudo '
