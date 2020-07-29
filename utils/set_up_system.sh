@@ -81,8 +81,10 @@ sudo = ''
 
 # in case its messed up by the docker
 fix_env = f' UHOME={os.environ["HOME"]} HOME={os.environ["HOME"]} USER={os.environ["USER"]} CONDA_DIR={os.environ["CONDA_DIR"]}'
+start = False
 
 for i,m in enumerate(l):
+  cmd = ''
   m = ' '.join(m).replace('/home/$NB_USER',os.environ["HOME"]).split(" ")
   if (m[0] == 'USER'):
     if m[1] == 'root':
@@ -104,6 +106,8 @@ for i,m in enumerate(l):
     else: 
         cmd = f'{sudo} bash -c \'cd {WORKDIR} && ' + ' '.join(m[1:]) + "'"
   elif (m[0] == 'ARG' or m[0] == 'ENV'):
+    if m[1].split('=')[0]  == 'conda_env':
+      start = True
     if m[1].split('_')[0] == 'NB':
       # ignore these
       cmd = ''
@@ -113,7 +117,8 @@ for i,m in enumerate(l):
     cmd = sudo + "cp " + ' '.join(m[1:])
   else:
     cmd=''
-  print(cmd)
+  if start:
+    print(cmd)
 EOF
 
 rm -rf Docker
