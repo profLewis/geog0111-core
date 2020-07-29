@@ -59,6 +59,7 @@ cd "${tmp}"
 cat << EOF > filter.py
 #!/usr/bin/env python
 import os
+import subprocess
 
 # for miniconda packages
 
@@ -66,6 +67,12 @@ sysname = os.uname().sysname
 if sysname == 'Darwin':
     sysname = 'MacOSX'
 
+cmd = "conda info | grep 'base environment' | cut -d ':' -f 2 | awk '{print $1}' | sed 's/(writable)//g'"
+cdir=subprocess.run(cmd,shell=True,stdout=subprocess.PIPE)   
+if cdir.returncode == 0:
+    os.environ["CONDA_DIR"]=cdir.stdout.decode("utf-8").strip()
+
+CONDA_DIR=os.environ["CONDA_DIR"]
 
 l=[j for j in [i.split('#')[0].split() for i in open('Docker/Dockerfile','r').read().replace("/fix-permissions","/fix_permissions").replace("fix-permissions","chown -R ${USER} ").replace("/fix_permissions","/fix-permissions").replace('/opt/conda',os.environ["CONDA_DIR"]).replace('\\\\\n','').split('\n')] if len(j)];
 
@@ -73,7 +80,7 @@ WORKDIR = '.'
 sudo = ''
 
 # in case its messed up by the docker
-fix_env = f' UHOME={os.environ["HOME"]} HOME={os.environ["HOME"]} USER={os.environ["USER"]}'
+fix_env = f' UHOME={os.environ["HOME"]} HOME={os.environ["HOME"]} USER={os.environ["USER"]} CONDA_DIR={os.environ["CONDA_DIR"]}'
 
 for i,m in enumerate(l):
   m = ' '.join(m).replace('/home/$NB_USER',os.environ["HOME"]).split(" ")
@@ -124,7 +131,7 @@ wget ${base}/Docker/start-notebook.sh
 wget ${base}/Docker/start-singleuser.sh
 cd ..
 
-export CONDA_DIR=$(conda info | grep 'base environment' | cut -d ':' -f 2 | awk '{print$1}')
+export CONDA_DIR=$(conda info | grep 'base environment' | cut -d ':' -f 2 | awk '{print $1}' | sed 's/(writable)//g')
 
 if [[ ! -d "$CONDA_DIR" ]]
 then
