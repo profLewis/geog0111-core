@@ -16,9 +16,8 @@ RUN git clone https://github.com/profLewis/geog0111-core.git
 WORKDIR $HOME/geog0111-core/notebooks
 
 # update conda packages
-RUN conda activate uclgeog && \
-    conda update -n uclgeog --yes && \
-    conda update -n uclgeog --all --yes 
+RUN conda update -n base --yes && \
+    conda update -n base --all --yes 
     
 EXPOSE 8888
 
