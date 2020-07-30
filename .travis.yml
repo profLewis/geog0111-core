@@ -20,7 +20,7 @@ jobs:
     - name: "Python latest on Xenial Linux"
       python: latest          # this works for Linux but is ignored on macOS or Windows
       before_install:
-        - docker build --file Dockerfile --tag proflewis/geog0111:
+        - docker build --file Dockerfile --tag proflewis/geog0111
 install:
   - python uclgeog/batch.py
   
