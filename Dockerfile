@@ -1,4 +1,4 @@
-FROM jgomezdans/conda-base
+FROM jgomezdans/uclgeog
 
 LABEL maintainer="Philip Lewis <p.lewis@ucl.ac.uk>"
 ENV GEOG0111_VERSION 0.0.1
