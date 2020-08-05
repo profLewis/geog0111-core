@@ -3,6 +3,7 @@ FROM jgomezdans/uclgeog
 LABEL maintainer="Philip Lewis <p.lewis@ucl.ac.uk>"
 
 USER root
+ENV GEOG0111_VERSION 0.0.1
 
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends \
