@@ -13,7 +13,6 @@ RUN apt-get update \
 USER $NB_USER
 
 RUN git clone https://github.com/profLewis/geog0111-core.git
-RUN mkdir -p $HOME/geog0111-core/notebooks/oneDrive
 
 WORKDIR $HOME/geog0111-core/notebooks
 
