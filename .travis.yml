@@ -8,8 +8,7 @@ env:
   - secure: SuCySAtChdMq1ZXIo4ewr84oHod/OYb3ucf4lHbfph8NMsc2KTt35Hgun1ejXX7hUbNhnzcwljYGAgGkDn4o9WYlhymTeWLYQj6DjO3z7wIuUEgi6wKCKusDGRjr3r8vTSPxwcOPI2XStvyokdv4UgTraF/jm/TlCSjK2zYUGG8g9DYmSHrYFyIb8OkM6Ud+aokq5JAM0GY7y/bEkvzuLrD/nd5qwFLaOL6l4kQW8DkKtoQONk+dLOc22TOM5CrApJ5GljU3kZNoMmhk9AHF1J/oZfejqfzZMFG6PM3HQ3kAqgmDQwfmQbMCktpdymnAD9Cb4aloenll9HCDU+GAyzmGJkPURyugP6i/tbtkKTTqucWlh2fUzFuAwSGPYskZY4Vo5DiPQ79BCmNKffrmY4C10lDJmKTlrYWCgO2NeeQYVCq/dri9ih4Mxlr9NDbFEqoXhyDl2QNVRXTZhIb4ahottZh0tiDkL/kFG7FXhsntAECwU765ScIgtKzxOqCG5UQw2YMGw8mZ0g0TPgZb3xWJ/A2+ZvLfKwQ5cJsaPd7OjYz+4tOGwmOIlM2rTU6Hz+tXlS9iWTDBeRg4JAumAr7v1zzJ6UexV/eM8D1V0blxYbtHQmV4e5HbSoDhtVl142D06eMFAMSXCll7Kf5pdNqzJtM4yd+yQb2F1hkII/Y=
 before_script:
 - version="$(awk '$2 == "GEOG0111_VERSION" { print $3; exit }' Dockerfile)"
-script:
-- docker build --pull --tag "$IMAGE_NAME" .
+- docker build --tag "$IMAGE_NAME" .
 after_script:
 - docker images
 before_deploy:
