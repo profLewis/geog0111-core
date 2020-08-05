@@ -2,29 +2,18 @@ FROM jgomezdans/uclgeog
 
 LABEL maintainer="Philip Lewis <p.lewis@ucl.ac.uk>"
 
-USER root
 ENV GEOG0111_VERSION 0.0.1
 
-RUN apt-get update \
- && apt-get install -yq --no-install-recommends \
-    git \
- && apt-get clean && rm -rf /var/lib/apt/lists/*
- 
+# We should be NB_USER as inherited from uclgeog
 USER $NB_USER
+
+# Ensure we're in home folder (we're by virtue of parent image...)
+WORKDIR $HOME 
 
 RUN git clone https://github.com/profLewis/geog0111-core.git
 RUN mkdir -p notebooks/oneDrive
 
 WORKDIR $HOME/geog0111-core/notebooks
-
-# update conda packages
-RUN conda update -n uclgeog --all --yes 
-    
-EXPOSE 8888
-
-# Configure container startup
-ENTRYPOINT ["tini", "-g", "--"]
-CMD ["start-notebook.sh"]
 
 RUN jupyter nbextension disable execute_time/ExecuteTime 
 
