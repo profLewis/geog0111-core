@@ -1,25 +1,22 @@
 sudo: required
 services:
-  - docker
+- docker
 env:
   global:
-    - IMAGE_NAME=proflewis/geog0111
-
+  - IMAGE_NAME=proflewis/geog0111
+  - secure: C+2qNKmSxpwYMoM67y6I5Td4jypjVrdh7cQbCC6LP4sk44JUqCGziQq/537oSWw4XM65v/D7QdlG4LYDk6vj7dqtuW+K1yLLUzOJoOJg4c3Iof5bXy1A/+pSNfTC720eDZtk05QFmgrEhGy3hWB1/IlC0ihwMNm1gk2OG0LVrQUKAFG2Y1WqdtnlmR2Ee8fOufFQlOvfG7MH7qbb9UUEE+/1AU/RqdHDbNOBX5IJkVhAxNLQ2L/EAdZfHs5W2fMtyOhHSocVG9Uas8DKoCb3Uf8JyTk5w+/ms8ZH61CKDzri6uQ23QR4+bjbfUZjim/giEB40t8rlaJUib3H5sCHuroobl4U/ors8kw7x5qSvrzZHh63Zvbg9hebdbHuIYeO8nKdiNcRaNsLIrP22ZgFys8Lf2qczhYDsoH4FXXY+o+PkCUq4DoBABVi6MpJKF1SgO6vepwd+8IPSk/OZTFjIUpGPoDQ6eNtUwrflYRGYUz23kMCRxz2D57pjEXSaL0jAv8/nphZIDd+4ASkQc2oiIGcCT1xBhFcdfVfzohvLNC9Wb03FizQz3JDi2zZM4G1iM9119n3tviBCLPUoulK4aTyo/9QsONX8ZM8Hd5QZqOVE7O9qzdA8yCgaWr8yQflW90yutbM2yDAlOXV0fEsdQN1vsflnGkg2ccxbpDVPq0=
+  - secure: SuCySAtChdMq1ZXIo4ewr84oHod/OYb3ucf4lHbfph8NMsc2KTt35Hgun1ejXX7hUbNhnzcwljYGAgGkDn4o9WYlhymTeWLYQj6DjO3z7wIuUEgi6wKCKusDGRjr3r8vTSPxwcOPI2XStvyokdv4UgTraF/jm/TlCSjK2zYUGG8g9DYmSHrYFyIb8OkM6Ud+aokq5JAM0GY7y/bEkvzuLrD/nd5qwFLaOL6l4kQW8DkKtoQONk+dLOc22TOM5CrApJ5GljU3kZNoMmhk9AHF1J/oZfejqfzZMFG6PM3HQ3kAqgmDQwfmQbMCktpdymnAD9Cb4aloenll9HCDU+GAyzmGJkPURyugP6i/tbtkKTTqucWlh2fUzFuAwSGPYskZY4Vo5DiPQ79BCmNKffrmY4C10lDJmKTlrYWCgO2NeeQYVCq/dri9ih4Mxlr9NDbFEqoXhyDl2QNVRXTZhIb4ahottZh0tiDkL/kFG7FXhsntAECwU765ScIgtKzxOqCG5UQw2YMGw8mZ0g0TPgZb3xWJ/A2+ZvLfKwQ5cJsaPd7OjYz+4tOGwmOIlM2rTU6Hz+tXlS9iWTDBeRg4JAumAr7v1zzJ6UexV/eM8D1V0blxYbtHQmV4e5HbSoDhtVl142D06eMFAMSXCll7Kf5pdNqzJtM4yd+yQb2F1hkII/Y=
 before_script:
-  - version="$(awk '$2 == "GEOG0111_VERSION" { print $3; exit }' Dockerfile)"
-  - docker pull "$IMAGE_NAME" || true
+- version="$(awk '$2 == "GEOG0111_VERSION" { print $3; exit }' Dockerfile)"
+- docker pull "$IMAGE_NAME" || true
 script:
-  - docker build --pull --tag "$IMAGE_NAME" .
-# --cache-from "$IMAGE_NAME"
-
-
+- docker build --pull --tag "$IMAGE_NAME" .
 after_script:
-  - docker images
-
+- docker images
 before_deploy:
-  - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
-  - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:latest"
-  - docker tag "$IMAGE_NAME" "${IMAGE_NAME}:${version}"
+- docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+- docker tag "$IMAGE_NAME" "${IMAGE_NAME}:latest"
+- docker tag "$IMAGE_NAME" "${IMAGE_NAME}:${version}"
 deploy:
   provider: script
   script: docker push "${IMAGE_NAME}:latest" && docker push "${IMAGE_NAME}:${version}"
