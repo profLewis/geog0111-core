@@ -9,7 +9,9 @@ before_script:
   - version="$(awk '$2 == "GEOG0111_VERSION" { print $3; exit }' Dockerfile)"
   - docker pull "$IMAGE_NAME" || true
 script:
-  - docker build --pull --cache-from "$IMAGE_NAME" --tag "$IMAGE_NAME" .
+  - docker build --pull --tag "$IMAGE_NAME" .
+# --cache-from "$IMAGE_NAME"
+
 
 after_script:
   - docker images

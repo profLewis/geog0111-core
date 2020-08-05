@@ -1,4 +1,4 @@
-FROM proflewis/geog0111:0.0.1
+FROM proflewis/geog0111:latest
 
 LABEL maintainer="Philip Lewis <p.lewis@ucl.ac.uk>"
 
